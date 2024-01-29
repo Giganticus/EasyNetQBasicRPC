@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQRpcClient", "EasyNetQRpcClient\EasyNetQRpcClient.csproj", "{909FC1B5-FFE2-450C-8866-B5E3DF616809}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyNetQRpcServer", "EasyNetQRpcServer\EasyNetQRpcServer.csproj", "{2497E43F-2673-4D7E-A7A1-A11EC2FC2523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{A649823F-4FF0-4CBE-B559-ECB489D55A41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{909FC1B5-FFE2-450C-8866-B5E3DF616809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{909FC1B5-FFE2-450C-8866-B5E3DF616809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{909FC1B5-FFE2-450C-8866-B5E3DF616809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{909FC1B5-FFE2-450C-8866-B5E3DF616809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2497E43F-2673-4D7E-A7A1-A11EC2FC2523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2497E43F-2673-4D7E-A7A1-A11EC2FC2523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2497E43F-2673-4D7E-A7A1-A11EC2FC2523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2497E43F-2673-4D7E-A7A1-A11EC2FC2523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A649823F-4FF0-4CBE-B559-ECB489D55A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A649823F-4FF0-4CBE-B559-ECB489D55A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A649823F-4FF0-4CBE-B559-ECB489D55A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A649823F-4FF0-4CBE-B559-ECB489D55A41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
