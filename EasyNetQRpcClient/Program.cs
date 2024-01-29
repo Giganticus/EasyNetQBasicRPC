@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 class Program 
 {
-    static void Main() 
+    static async Task Main() 
     {
         var connectionString = "host=localhost;username=guest;password=guest";
 
@@ -15,7 +15,7 @@ class Program
             while ((input = Console.ReadLine()) != "Quit")
             {
                 var myRequest = new MyRequest(input);
-                var response = bus.Rpc.Request<MyRequest, MyResponse>(myRequest);
+                var response = await bus.Rpc.RequestAsync<MyRequest, MyResponse>(myRequest);
                 
                 Console.WriteLine("Received:");
                 Console.WriteLine(JsonConvert.SerializeObject(response));

@@ -5,14 +5,14 @@ using Newtonsoft.Json;
 
 internal class Program
 {
-    static void Main()
+    static async Task Main()
     {
         var connectionString = "host=localhost;username=guest;password=guest";
 
         using var bus = RabbitHutch.CreateBus(
             connectionString);
 
-        bus.Rpc.Respond<MyRequest, MyResponse>(request =>
+        await bus.Rpc.RespondAsync<MyRequest, MyResponse>(request =>
         {
             Console.WriteLine($"Received: {request.Name}");
             Console.WriteLine("Responding:");
