@@ -1,4 +1,8 @@
-﻿using EasyNetQ;
+﻿using Configuration;
+using EasyNetQ;
+using EasyNetQ.DI;
+
+namespace EasyNetQRpcServer;
 
 internal class Program
 {
@@ -7,7 +11,12 @@ internal class Program
         var connectionString = "host=localhost;username=guest;password=guest";
 
         using var bus = RabbitHutch.CreateBus(
-            connectionString);
+            connectionString,
+            services =>
+            {
+                services.Register<IConventions>(
+                    c => new MyConventions(c.Resolve<ITypeNameSerializer>()));
+            });
 
         await bus.Rpc.RespondAsync<string, string>(request =>
         {
