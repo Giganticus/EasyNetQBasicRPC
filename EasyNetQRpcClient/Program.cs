@@ -16,6 +16,13 @@ class Program
             {
                 services.Register<IConventions>(
                     c => new MyConventions(c.Resolve<ITypeNameSerializer>()));
+                
+                services.Register<ITypeNameSerializer>(c => new MyTypeNameSerializer());
+
+                services.Register<IMessageSerializationStrategy>(
+                    c => new MyMessageSerializationStrategy(
+                        c.Resolve<ITypeNameSerializer>(),
+                        c.Resolve<ISerializer>()));
             });
         {
             var input = String.Empty;
