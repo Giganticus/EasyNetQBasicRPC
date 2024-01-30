@@ -1,7 +1,4 @@
-﻿
-using Contracts;
-using EasyNetQ;
-using Newtonsoft.Json;
+﻿using EasyNetQ;
 
 internal class Program
 {
@@ -12,12 +9,12 @@ internal class Program
         using var bus = RabbitHutch.CreateBus(
             connectionString);
 
-        await bus.Rpc.RespondAsync<MyRequest, MyResponse>(request =>
+        await bus.Rpc.RespondAsync<string, string>(request =>
         {
-            Console.WriteLine($"Received: {request.Name}");
+            Console.WriteLine($"Received: {request}");
             Console.WriteLine("Responding:");
-            var response = new MyResponse($"Hello {request.Name}");
-            Console.WriteLine(JsonConvert.SerializeObject(response));
+            var response = $"Hello {request}";
+            Console.WriteLine(response);
             return response;
         });
         
