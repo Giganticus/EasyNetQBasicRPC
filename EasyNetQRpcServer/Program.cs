@@ -24,7 +24,7 @@ internal class Program
                         c.Resolve<ITypeNameSerializer>(),
                         c.Resolve<ISerializer>()));
             });
-
+        
         await bus.Rpc.RespondAsync<string, string>(request =>
         {
             Console.WriteLine($"Received: {request}");

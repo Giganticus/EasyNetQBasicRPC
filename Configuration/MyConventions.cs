@@ -8,5 +8,6 @@ public class MyConventions : Conventions
     {
         ExchangeNamingConvention = x => "my.existing.exchange";
         RpcRequestExchangeNamingConvention = x => "my.existing.exchange";
+        RpcRoutingKeyNamingConvention = x => x == typeof(string) ? string.Empty : base.RpcRoutingKeyNamingConvention(x);
     }
 }
