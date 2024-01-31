@@ -1,4 +1,6 @@
-﻿using Configuration;
+﻿using System;
+using System.Threading.Tasks;
+using Configuration;
 using EasyNetQ;
 using EasyNetQ.DI;
 
@@ -21,8 +23,7 @@ class Program
 
                 services.Register<IMessageSerializationStrategy>(
                     c => new MyMessageSerializationStrategy(
-                        c.Resolve<ITypeNameSerializer>(),
-                        c.Resolve<ISerializer>()));
+                        c.Resolve<ITypeNameSerializer>()));
             });
         {
             var input = String.Empty;

@@ -1,6 +1,6 @@
-using System.Buffers;
 using System.Text;
 using EasyNetQ;
+using EasyNetQ.Internals;
 
 namespace Configuration;
 
@@ -8,26 +8,27 @@ public class MyMessageSerializationStrategy
     : IMessageSerializationStrategy
 {
     private readonly ITypeNameSerializer _typeNameSerializer;
-    private readonly ISerializer _serializer;
 
     public MyMessageSerializationStrategy( 
-        ITypeNameSerializer typeNameSerializer,
-        ISerializer serializer)
+        ITypeNameSerializer typeNameSerializer)
     {
         _typeNameSerializer = typeNameSerializer;
-        _serializer = serializer;
     }
     
     public SerializedMessage SerializeMessage(IMessage message)
     {
         var stringType = typeof(string);
         
-        var messageBody = _serializer.MessageToBytes(stringType, message.GetBody());
+        var stream = new ArrayPooledMemoryStream();
+        var body = (string)message.GetBody();
+        var bytes = Encoding.UTF8.GetBytes(body);
+        stream.Write(bytes);
 
         var messageProperties = message.Properties;
         messageProperties.Type = _typeNameSerializer.Serialize(stringType);
-
-        return new SerializedMessage(messageProperties, messageBody);
+        
+        var serializedMessage = new SerializedMessage(messageProperties, stream);
+        return serializedMessage;
     }
 
     public IMessage DeserializeMessage(MessageProperties properties, in ReadOnlyMemory<byte> body)
