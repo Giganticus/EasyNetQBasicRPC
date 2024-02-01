@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Configuration;
 using EasyNetQ;
@@ -6,11 +7,11 @@ using EasyNetQ.DI;
 
 namespace EasyNetQRpcServer;
 
-internal class Program
+internal static class Program
 {
-    static async Task Main()
+    private static async Task Main()
     {
-        var connectionString = "host=localhost;username=guest;password=guest";
+        const string connectionString = "host=localhost;username=guest;password=guest";
 
         using var bus = RabbitHutch.CreateBus(
             connectionString,
@@ -18,23 +19,26 @@ internal class Program
             {
                 services.Register<IConventions>(
                     c => new MyConventions(c.Resolve<ITypeNameSerializer>()));
-                
-                services.Register<ITypeNameSerializer>(c => new MyTypeNameSerializer());
 
                 services.Register<IMessageSerializationStrategy>(
                     c => new MyMessageSerializationStrategy(
                         c.Resolve<ITypeNameSerializer>()));
             });
         
-        await bus.Rpc.RespondAsync<string, string>(request =>
+        await bus.Rpc.RespondAsync<string, string>((request, c) =>
         {
             Console.WriteLine($"Received: {request}");
             Console.WriteLine("Responding:");
             var response = $"Hello {request}";
             Console.WriteLine(response);
-            return response;
-        });
-        
+            return Task.FromResult(response);
+        }, config =>
+        {
+            config.WithExpires(TimeSpan.FromSeconds(5));
+            config.WithQueueName(string.Empty);
+
+        }, CancellationToken.None);
+
         Console.WriteLine("Listening for requests. Hit <return> to quit");
         Console.ReadLine();
     }

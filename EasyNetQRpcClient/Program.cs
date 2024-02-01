@@ -6,11 +6,11 @@ using EasyNetQ.DI;
 
 namespace EasyNetQRpcClient;
 
-class Program 
+internal static class Program 
 {
-    static async Task Main() 
+    private static async Task Main() 
     {
-        var connectionString = "host=localhost;username=guest;password=guest";
+        const string connectionString = "host=localhost;username=guest;password=guest";
 
         using var bus = RabbitHutch.CreateBus(
             connectionString,
@@ -26,10 +26,13 @@ class Program
                         c.Resolve<ITypeNameSerializer>()));
             });
         {
-            var input = String.Empty;
+            string? input;
             Console.WriteLine("Enter a name to receive a greeting. 'Quit' to quit.");
             while ((input = Console.ReadLine()) != "Quit")
             {
+                if(string.IsNullOrWhiteSpace(input))
+                    continue;
+                
                 var response = await bus.Rpc.RequestAsync<string, string>(input);
                 
                 Console.WriteLine("Received:");
